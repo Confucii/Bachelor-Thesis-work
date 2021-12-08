@@ -141,7 +141,7 @@ class Character(object):
         for vec2 in self.geometry:
             x_data.append(vec2[0])
             y_data.append(vec2[1])
-        plt.plot(x_data, y_data)
+        plt.plot(x_data, y_data, color=self.color)
 
     def generate_geometry(self):
         pass
