@@ -19,13 +19,13 @@ joint2 = np.dot(rotation1, joint2)
 ## Task 2
 ### Inverse Kinematics
 #### Derivatives
-![Image](/../Images/Derivatives.png "Inverse Kinematics")
+![Image](../Images/Derivatives.png "Inverse Kinematics")
 #### 3 segment arm
-![Image](/../Images/Inverse.png "Inverse Kinematics")
-![Image](/../Images/Inverse_2.png "Inverse Kinematics")
+![Image](../Images/Inverse.png "Inverse Kinematics")
+![Image](../Images/Inverse_2.png "Inverse Kinematics")
 
 ### Regression
-![Image](/../Images/Regression.png "Inverse Kinematics")
+![Image](../Images/Regression.png "Inverse Kinematics")
 ### Backpropagation
-![Image](/../Images/Backpropagation.png "Inverse Kinematics")
+![Image](../Images/Backpropagation.png "Inverse Kinematics")
 
