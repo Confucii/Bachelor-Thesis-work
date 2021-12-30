@@ -21,11 +21,11 @@ joint2 = np.dot(rotation1, joint2)
 #### Derivatives
 ![Image](../Images/Derivatives.png "Inverse Kinematics")
 #### 3 segment arm
-![Image](../Images/Inverse.png "3 segment arm")
-![Image](../Images/Inverse_2.png "3 segment arm")
+![Image](../Images/Inverse.png "Inverse Kinematics")
+![Image](../Images/Inverse_2.png "Inverse Kinematics")
 
 ### Regression
-![Image](../Images/Regression.png "Regression 1")
+![Image](../Images/Regression.png "Inverse Kinematics")
 ### Backpropagation
-![Image](../Images/Backpropagation.png "Regression 2")
+![Image](../Images/Backpropagation.png "Inverse Kinematics")
 
