@@ -21,7 +21,7 @@ BATCH_SIZE = 16
 TRAIN_TEST_SPLIT = 0.7
 
 
-def normilize(x):
+def normalize(x):
     x_max = np.max(x, axis=0)
     x_min = np.min(x, axis=0)
     return (x - (x_max + x_min) * 0.5) / ((x_max - x_min) * 0.5)
@@ -41,10 +41,10 @@ class Dataset:
             self.X, self.Y, self.labels = pickle.load(fp)
 
         self.X = np.array(self.X).astype(np.float)
-        self.X = normilize(self.X)
+        self.X = normalize(self.X)
 
         self.Y = np.array(self.Y).astype(np.float)
-        self.Y = normilize(self.Y)
+        self.Y = normalize(self.Y)
 
     def __len__(self):
         return len(self.X)
@@ -262,7 +262,7 @@ class NRMSE:
         self.y = y
         self.y_prim = y_prim
         RMSE = np.sqrt( self.MSE.forward(self.y, self.y_prim) )
-        std = np.sqrt( np.sum(np.power((self.y_prim.value - np.mean(self.y.value)), 2)) / (self.y.value.size - 1) )
+        std = np.sqrt( np.sum(np.power((self.y.value - np.mean(self.y_prim.value)), 2)) / (self.y.value.size - 1) )
         loss = RMSE / std
         return loss
 
