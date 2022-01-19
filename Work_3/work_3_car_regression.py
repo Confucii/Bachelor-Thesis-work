@@ -254,10 +254,10 @@ class NRMSE:
     def forward(self, y: Variable, y_prim: Variable):
         self.y = y
         self.y_prim = y_prim
-        RMSE = np.sqrt( self.MSE.forward(self.y, self.y_prim) )
-        std = np.sqrt( np.sum(np.power((self.y.value - np.mean(self.y_prim.value)), 2)) / (self.y.value.size - 1) )
-        loss = RMSE / std
+        RMSE = np.sqrt(np.mean((self.y.value - self.y_prim.value) ** 2))
+        loss = RMSE * (1 / np.max(self.y.value) - np.min(self.y.value))
         return loss
+
 
 model = Model()
 optimizer = OptimizerSGD(
