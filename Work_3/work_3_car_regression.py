@@ -163,21 +163,14 @@ class LayerReLU:
 
     def forward(self, x: Variable):
         self.x = x
-        if x.value.all() >= 0:
-            self.output = Variable(
-                value=self.x.value
-            )
-        else:
-            self.output = Variable(
-                value=0
-            )
+        self.output = Variable(
+            value=np.array(x.value)
+        )
+        self.output.value[self.output.value < 0] = 0
         return self.output
 
     def backward(self):
-        if self.x.value.all() >= 0:
-            self.x.grad += 1 * self.output.grad
-        else:
-            self.x.grad += 0 * self.output.grad
+        self.x.grad += (self.x.value >= 0) * self.output.grad
 
 
 class LossMSE():
