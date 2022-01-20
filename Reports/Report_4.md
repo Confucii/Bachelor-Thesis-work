@@ -33,3 +33,6 @@ The reason I did this is because otherwise the code would not run in any meaning
 ![Image](../Images/PyTorch_Wine.png "PyTorch Wine")
 #### Problem 
 The loss and accuracy do not change much, they fluctuate in the same range continuously.
+
+### Main Findings
+In this work I have started working with classification tasks and have been introduced to PyTorch. PyTorch is a fascinating tool to be honest, I was impressed with the inherent implementation of gradient and how much it simplifies the coding experience at this stage. The classification tasks are interesting, however I have encountered a problem which I cannot solve currently, even though I aspire to do it. It seems to me that I am missing something crucial but because of some kind of knowledge gap I cannot grasp it.

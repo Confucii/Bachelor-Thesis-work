@@ -5,11 +5,11 @@
 ## Task 4
 ### PyTorch housing
 #### Result
-![Image](../Images/PyTorch_Housing.png "PyTorch_Housing")
+![Image](../Images/PyTorch_Housing.png "PyTorch Housing")
 #### Problem 
 When loss reaches approximately 79 it starts to rise again.
 Learning Rate = 1e-4. In-out features are [13 6]->[6 1] 
-![Image](../Images/PyTorch_Housing_Problem.png "PyTorch_Housing_Problem")
+![Image](../Images/PyTorch_Housing_Problem.png "PyTorch Housing Problem")
 
 ### Numpy Iris
 #### Result
@@ -30,6 +30,9 @@ The reason I did this is because otherwise the code would not run in any meaning
 
 ### PyTorch Wine
 #### Result
-![Image](../Images/PyTorch_Wine.png "Numpy Iris")
+![Image](../Images/PyTorch_Wine.png "PyTorch Wine")
 #### Problem 
 The loss and accuracy do not change much, they fluctuate in the same range continuously.
+
+### Main Findings
+In this work I have started working with classification tasks and have been introduced to PyTorch. PyTorch is a fascinating tool to be honest, I was impressed with the inherent implementation of gradient and how much it simplifies the coding experience at this stage. The classification tasks are interesting, however I have encountered a problem which I cannot solve currently, even though I aspire to do it. It seems to me that I am missing something crucial but because of my 
