@@ -1,0 +1,35 @@
+## Questions
+
+### What to do about bachelor thesis report on 21st of January?
+
+## Task 4
+### PyTorch housing
+#### Result
+![Image](../Images/PyTorch_Housing.png "PyTorch_Housing")
+#### Problem 
+When loss reaches approximately 79 it starts to rise again.
+Learning Rate = 1e-4. In-out features are [13 6]->[6 1] 
+![Image](../Images/PyTorch_Housing_Problem.png "PyTorch_Housing_Problem")
+
+### Numpy Iris
+#### Result
+![Image](../Images/Numpy_Iris.png "Numpy Iris")
+#### Problem 
+Results are inconsistent and vary from run to run, should it be that way?
+![Image](../Images/Numpy_Iris_Problem.png "Numpy Iris Problem")
+
+### Numpy Wine
+#### Result
+Very poor result, sometimes instead of values it shows "nan"
+![Image](../Images/Numpy_Wine.png "Numpy Wine")
+#### Problem 
+Somehow with wine dataset, some of the y_prim values are zeroes, the fix that I tried is following:
+![Image](../Images/Numpy_Wine_Problem.png "Numpy Wine Problem")
+The reason I did this is because otherwise the code would not run in any meaningful way, as it would give a division by zero error.
+![Image](../Images/Numpy_Wine_Problem2.png "Numpy Wine Problem")
+
+### PyTorch Wine
+#### Result
+![Image](../Images/PyTorch_Wine.png "Numpy Iris")
+#### Problem 
+The loss and accuracy do not change much, they fluctuate in the same range continuously.
