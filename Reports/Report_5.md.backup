@@ -1,0 +1,17 @@
+## Task 5
+### ConvNet MNIST
+LEARNING_RATE = 1e-4
+BATCH_SIZE = 16
+MAX_LEN = 4000
+#### Result
+![Image](../Images/convnet_MNIST.png "PyTorch Housing")
+
+### ConvNet LFW
+#### Result
+![Image](../Images/convnet_LFW.png "Numpy Iris")
+
+
+### TensorBoard
+#### Result
+![Image](../Images/Numpy_Wine.png "Numpy Wine")
+![Image](../Images/Numpy_Wine.png "Numpy Wine")
