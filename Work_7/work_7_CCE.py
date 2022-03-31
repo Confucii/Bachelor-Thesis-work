@@ -9,16 +9,13 @@ from tensorboardX.utils import  figure_to_image
 import tensorboard_utils
 import argparse
 import time
-from scipy.ndimage import gaussian_filter1d
 
 parser = argparse.ArgumentParser(description='Model trainer')
-parser.add_argument('-run_name', default=f'run', type=str)
-parser.add_argument('-sequence_name', default=f'seq', type=str)
-parser.add_argument('-learning_rate', default=1e-3, type=float)
-parser.add_argument('-batch_size', default=32, type=int)
+
+parser.add_argument('-run_name', default=f'run_{time.time()}', type=str)
+parser.add_argument('-sequence_name', default=f'seq_default', type=str)
 parser.add_argument('-epochs', default=10, type=int)
-parser.add_argument('-device', default='cuda', type=str)
-parser.add_argument('--local_rank', default=0, type=int)
+
 args = parser.parse_args()
 
 LEARNING_RATE = 1e-4
@@ -50,10 +47,10 @@ class DatasetFashionMNIST(torch.utils.data.Dataset):
         # list tuple np.array torch.FloatTensor
         pil_x, y_idx = self.data[idx]
         np_x = np.array(pil_x)
-        np_x = np.expand_dims(np_x, axis=0) # (1, W, H)
+
+        np_x = np.expand_dims(np_x, axis=0)
 
         x = torch.FloatTensor(np_x)
-
         y = torch.LongTensor([y_idx])
         return x, y
 
@@ -78,7 +75,8 @@ class FocalLoss(torch.nn.Module):
         self.loss = 0
 
     def forward(self, y, y_prim):
-        self.loss = torch.sum(-y * ((1 - y_prim) ** self.gamma * torch.log(y_prim + 1e-8)))
+        self.loss = -torch.sum(
+            (((1 - y_prim[range(len(y)), y] + 1e-8) ** self.gamma) * torch.log(y_prim[range(len(y)), y] + 1e-8)))
         return self.loss
 
 
@@ -107,16 +105,15 @@ model = model.to(DEVICE)
 optimizer = torch.optim.Adam(model.parameters(), lr=LEARNING_RATE)
 foc_05 = FocalLoss(0.5)
 
-
 metrics = {}
 for stage in ['train', 'test']:
     for metric in [
         'loss',
         'acc'
     ]:
-        metrics[f'{stage}_{metric}_0.5'] = []
+        metrics[f'{stage}_{metric}'] = []
 
-for epoch in range(1, 100 + 1):
+for epoch in range(1, args.epochs + 1):
     for data_loader in [data_loader_train, data_loader_test]:
         metrics_epoch = {key: [] for key in metrics.keys()}
 
@@ -126,11 +123,10 @@ for epoch in range(1, 100 + 1):
 
         for x, y in data_loader:
             x = x.to(DEVICE)
-            y = y.to(DEVICE)
+            y = y.to(DEVICE).squeeze()
 
             y_prim = model.forward(x)
-            loss = foc_05.forward(y, y_prim)
-
+            loss = -torch.sum(torch.log(y_prim[range(len(y)), y] + 1e-8))
 
             if data_loader == data_loader_train:
                 loss.backward()
@@ -140,30 +136,27 @@ for epoch in range(1, 100 + 1):
             np_y_prim = y_prim.cpu().data.numpy()
             np_y = y.cpu().data.numpy()
 
-            idx_y = np.argmax(np_y, axis=1)
+            idx_y = np.array(y)
             idx_y_prim = np.argmax(np_y_prim, axis=1)
 
             acc = np.average((idx_y == idx_y_prim) * 1.0)
 
-            metrics_epoch[f'{stage}_acc_0.5'].append(acc)
-            metrics_epoch[f'{stage}_loss_0.5'].append(loss.cpu().item())
+            metrics_epoch[f'{stage}_acc'].append(acc)
+            metrics_epoch[f'{stage}_loss'].append(loss.cpu().item())
 
         metrics_strs = []
         for key in metrics_epoch.keys():
             if stage in key:
                 value = np.mean(metrics_epoch[key])
                 metrics[key].append(value)
-                metrics_strs.append(f'{key}: {round(value, 3)}')
+                metrics_strs.append(f'{key}: {round(value, 2)}')
 
         print(f'epoch: {epoch} {" ".join(metrics_strs)}')
 
     if epoch % 10 == 0:
-        plt.clf()
         plts = []
         c = 0
         for key, value in metrics.items():
-            value = gaussian_filter1d(value, sigma=2)
-
             plts += plt.plot(value, f'C{c}', label=key)
             ax = plt.twinx()
             c += 1
