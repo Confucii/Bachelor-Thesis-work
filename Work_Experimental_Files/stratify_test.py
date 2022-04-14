@@ -24,7 +24,7 @@ args = parser.parse_args()
 
 LEARNING_RATE = 1e-4
 BATCH_SIZE = 16
-MAX_LEN = 200
+MAX_LEN = 2370
 INPUT_SIZE = 28
 DEVICE = 'cpu'
 
@@ -37,7 +37,7 @@ class DatasetLFW(torch.utils.data.Dataset):
     def __init__(self):
         super().__init__()
 
-        self.X, self.Y = sklearn.datasets.fetch_lfw_people(return_X_y=True, slice_=(slice(62, 187), slice(62, 187)), min_faces_per_person=5)
+        self.X, self.Y = sklearn.datasets.fetch_lfw_people(return_X_y=True, slice_=(slice(62, 187), slice(62, 187)), min_faces_per_person=30)
 
     def __len__(self):
         if MAX_LEN:
